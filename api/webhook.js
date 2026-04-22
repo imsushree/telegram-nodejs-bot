@@ -17,6 +17,10 @@ const setupWebhook = async (res) => {
 
 module.exports = async (req, res) => {
   if (req.method === 'GET') {
+    if (req.query.setup) {
+      return await setupWebhook(res);
+    };
+
     return res.status(200).json({ ok: true, message: 'Telegram webhook is live' });
   }
 
@@ -24,10 +28,6 @@ module.exports = async (req, res) => {
     return res.status(405).json({ ok: false, error: 'Method Not Allowed' });
   }
 
-  if (req.query.setup) {
-    setupWebhook(res);
-    return;
-  };
 
   return handleUpdate(req, res);
 };
