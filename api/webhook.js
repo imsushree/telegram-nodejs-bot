@@ -12,7 +12,7 @@ console.log("process.env.WEBHOOK_SECRET_TOKEN", process.env.WEBHOOK_SECRET_TOKEN
 
 const setupWebhook = async (res) => {
   try {
-    const result = await bot.telegram.setWebhook(webhookUrl, { secretToken: process.env.WEBHOOK_SECRET_TOKEN });
+    const result = await bot.telegram.setWebhook(webhookUrl, { secret_token: process.env.WEBHOOK_SECRET_TOKEN });
     res.status(200).json({ success: true, message: "Webhook set!", result });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
