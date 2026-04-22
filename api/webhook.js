@@ -1,4 +1,4 @@
-const { createBot } = require('./create-bot');
+const { createBot } = require('../src/create-bot');
 
 const bot = createBot();
 const handleUpdate = bot.webhookCallback('/api/webhook', { secretToken: process.env.WEBHOOK_SECRET_TOKEN });
@@ -6,7 +6,7 @@ const handleUpdate = bot.webhookCallback('/api/webhook', { secretToken: process.
 const VERCEL_URL = process.env.VERCEL_URL;
 const webhookUrl = `https://${VERCEL_URL}/api/webhook`;
 
-const setupWebhook = async () => {
+const setupWebhook = async (res) => {
   try {
     const result = await bot.telegram.setWebhook(webhookUrl, { secretToken: process.env.WEBHOOK_SECRET_TOKEN });
     res.status(200).json({ success: true, message: "Webhook set!", result });
@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
   }
 
   if (req.query.setup) {
-    setupWebhook();
+    setupWebhook(res);
     return;
   };
 
