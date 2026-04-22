@@ -6,6 +6,10 @@ const handleUpdate = bot.webhookCallback('/api/webhook', { secretToken: process.
 const VERCEL_URL = process.env.VERCEL_URL;
 const webhookUrl = `https://${VERCEL_URL}/api/webhook`;
 
+console.log("VERCEL_URL", VERCEL_URL);
+console.log("webhookUrl", webhookUrl);
+console.log("process.env.WEBHOOK_SECRET_TOKEN", process.env.WEBHOOK_SECRET_TOKEN);
+
 const setupWebhook = async (res) => {
   try {
     const result = await bot.telegram.setWebhook(webhookUrl, { secretToken: process.env.WEBHOOK_SECRET_TOKEN });
@@ -16,6 +20,7 @@ const setupWebhook = async (res) => {
 };
 
 module.exports = async (req, res) => {
+  console.log("req.method", req.method);
   if (req.method === 'GET') {
     if (req.query.setup) {
       return await setupWebhook(res);
@@ -27,6 +32,8 @@ module.exports = async (req, res) => {
   if (req.method !== 'POST') {
     return res.status(405).json({ ok: false, error: 'Method Not Allowed' });
   }
+
+  console.log("req", req);
 
 
   return handleUpdate(req, res);
