@@ -3,7 +3,7 @@ const { createBot } = require('../src/create-bot');
 const bot = createBot();
 const handleUpdate = bot.webhookCallback('/api/webhook', { secretToken: process.env.WEBHOOK_SECRET_TOKEN });
 
-const VERCEL_URL = process.env.VERCEL_URL;
+const VERCEL_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL;
 const webhookUrl = `https://${VERCEL_URL}/api/webhook`;
 
 const setupWebhook = async (res) => {
